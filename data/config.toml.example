@@ -1,0 +1,62 @@
+# Bot configuration (example).
+#
+# Copy this file to data/config.toml on the host before the first start when
+# running with Docker Compose, or to ./config.toml when running the binary from
+# the repository root. The bot rewrites the file whenever state changes, so a
+# mounted copy is the normal way to seed settings.
+#
+# Every key can be edited while the bot is stopped. Channel and role IDs are
+# snowflakes: enable Discord developer mode and "Copy ID" on the channel/role.
+# 0 means "not configured" and disables that feature (Føtex and Lidl feeds only
+# run once their channel ID is set).
+
+[bot]
+# Channel that receives the SPAR deals. Configure with /set_deals_channel.
+channel_id = 0
+# Optional Føtex and Lidl feeds. Leave 0 to run the SPAR feed only.
+fotex_channel_id = 0
+lidl_channel_id = 0
+
+# Publication IDs already posted. Leave empty; the bot fills these in and uses
+# them to avoid posting the same catalogue twice. They are also mirrored into
+# bot.db (the feeds table), which takes precedence when SQLite is available.
+last_week = ""
+fotex_last_week = ""
+lidl_last_week = ""
+
+# Role pinged once per posted feed. 0 disables the ping.
+ping_role_id = 0
+fotex_ping_role_id = 0
+lidl_ping_role_id = 0
+
+# 5-field cron (minute hour day-of-month month day-of-week) evaluated in the
+# container timezone (TZ, default Europe/Copenhagen). The default checks every
+# 30 minutes on Fridays.
+check_cron = "*/30 * * * 5"
+# Automatic posting is held until this local time on the matching day.
+notification_time = "07:00"
+# Matcher implementation: "query" (default, deterministic query language) or
+# "keywords" (strict legacy keyword matcher).
+matcher = "query"
+
+# Legacy keyword list. Used only when no [[want]] blocks are defined; each
+# keyword becomes its own want.
+keywords = [
+  "chips",
+  "chokolade",
+]
+
+# Fallback wants without the database. With SQLite available, wants added via
+# /want take precedence and this list is imported once into bot.db.
+#
+# [[want]]
+# id = "sodavand"
+# describe = "Sukkerfri sodavand"
+# include = ["cola", "pepsi"]
+# exclude = ["zero"]
+# max_price = 25.0
+# retailers = ["spar", "fotex"]
+
+# Tracked Discord messages removed before the next post. Maintained by the bot;
+# format is "retailer:channel_id:message_id".
+posted_messages = []

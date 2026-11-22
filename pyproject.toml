@@ -1,0 +1,24 @@
+[project]
+name = "tjekapi-paddleocr"
+version = "0.1.0"
+description = "uv-managed PaddleOCR runtime for the tjekapi OCR worker"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "paddleocr[all]==3.7.0",
+    "paddlepaddle==3.2.0",
+]
+
+# This repository is primarily a Go project. uv manages the OCR runtime
+# dependencies without trying to install the repository as a Python package.
+[tool.uv]
+package = false
+
+# PaddlePaddle's CPU wheels are hosted on its official package index. The
+# source is explicit so unrelated dependencies continue to resolve from PyPI.
+[tool.uv.sources]
+paddlepaddle = { index = "paddle-cpu" }
+
+[[tool.uv.index]]
+name = "paddle-cpu"
+url = "https://www.paddlepaddle.org.cn/packages/stable/cpu/"
+explicit = true

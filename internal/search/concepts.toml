@@ -1,0 +1,436 @@
+# Konceptregister for tilbudssøgningen.
+#
+# Hvert [[concepts]]-blok beskriver ét koncept:
+#   name        - søgeordet brugere skriver (fx "øl")
+#   description - valgfri note til dokumentation
+#   aliases     - synonymer, stavevarianter, mærker, produktnavne
+#   refs        - navne på andre koncepter, hvis aliases også hører til her
+#
+# Aliases normaliseres ved indlæsning (små bogstaver, diakritik foldes:
+# æ->ae, ø->oe, å->aa), så "coca-cola", "COCA COLA" og "coca cola" er ens.
+# Referencer må danne cykler; udvidelsen er cykelsikker.
+#
+# Principper fra de rigtige tilbudsdata (føtex + SPAR, uge 42):
+#   - Brands holdes som egne koncepter og bindes via refs, så en søgning
+#     på "coca cola" ikke udvider til alt sodavand.
+#   - Farlige korte ord afstemmes mod faktiske tilbudstekster: "rose" er
+#     bevidst ikke et vin-alias (ROSE er et kyllingemærke i dataene),
+#     "tuborg" er bevidst ikke et øl-alias (Tuborg Squash er sodavand).
+#   - Udelukkelser bruger samme udvidelse: "øl -julekalender" afviser
+#     enhver adventskalender, også dem med "julekalender" i navnet.
+
+[[concepts]]
+name = "øl"
+description = "Øl og øltyper. Søg 'øl -julekalender' for øl uden adventskalendere."
+aliases = ["øl", "pilsner", "lager", "bajer", "fadøl", "hvedeøl", "classic øl", "ølflasker", "specialøl", "julebryg", "påskebryg", "hvidtøl", "heineken", "leffe", "corona", "hoegaarden", "singha", "asahi"]
+refs = ["carlsberg", "tuborg", "grimbergen", "kronenbourg", "jacobsen"]
+
+[[concepts]]
+name = "carlsberg"
+description = "Carlsberg-øl. Brands holdes for sig via refs."
+aliases = ["carlsberg", "carlsberg pilsner", "carlsberg classic"]
+
+[[concepts]]
+name = "tuborg"
+description = "Tuborg-øl. Kun øl-former: 'tuborg' alene ville ellers ramme Tuborg Squash (sodavand)."
+aliases = ["grøn tuborg", "tuborg classic", "tuborg pilsner", "tuborg gylden"]
+
+[[concepts]]
+name = "grimbergen"
+aliases = ["grimbergen"]
+
+[[concepts]]
+name = "kronenbourg"
+aliases = ["1664", "kronenbourg"]
+
+[[concepts]]
+name = "jacobsen"
+description = "Jacobsen Bryghus-øl. Kun øl-specifikke former: 'Familien Jacobsen' er en pålægsserie, ikke øl."
+aliases = ["jacobsen bryghus", "jacobsen pilsner", "jacobsen classic", "jacobsen brown ale", "jacobsen påskeøl"]
+
+[[concepts]]
+name = "cider"
+aliases = ["cider", "æblecider", "somersby", "hasselnøddecider"]
+
+[[concepts]]
+name = "breezer"
+aliases = ["breezer", "bacardi breezer"]
+
+[[concepts]]
+name = "sodavand"
+description = "Sodavand generelt. 'cola' udvider til cola-mærkerne."
+aliases = ["sodavand", "softdrink", "sodavandsflasker", "dansk sodavand"]
+refs = ["cola", "squash", "fanta", "sprite", "faxe-kondi", "schweppes"]
+
+[[concepts]]
+name = "cola"
+description = "Cola-familien. Coca-Cola og Pepsi er egne brands, så 'coca cola -zero' virker smalt."
+aliases = ["cola", "max cola", "zero cola"]
+refs = ["coca-cola", "pepsi"]
+
+[[concepts]]
+name = "coca-cola"
+aliases = ["coca cola", "cocacola", "coke", "coca"]
+
+[[concepts]]
+name = "pepsi"
+aliases = ["pepsi", "pepsi max", "pepsi black", "pepsi zero"]
+
+[[concepts]]
+name = "squash"
+description = "Tuborg Squash og lignende citrusdrikke. Kun produkt-faste former: 'spaghetti squash' er en grøntsag, ikke en drik."
+aliases = ["tuborg squash", "squash citrusdrik"]
+
+[[concepts]]
+name = "fanta"
+aliases = ["fanta"]
+
+[[concepts]]
+name = "sprite"
+aliases = ["sprite"]
+
+[[concepts]]
+name = "faxe-kondi"
+aliases = ["faxe kondi", "faxekondi", "kondi"]
+
+[[concepts]]
+name = "ramlösa"
+aliases = ["ramlösa", "ramlosa"]
+
+[[concepts]]
+name = "schweppes"
+aliases = ["schweppes"]
+
+[[concepts]]
+name = "cocio"
+aliases = ["cocio"]
+
+[[concepts]]
+name = "juice"
+aliases = ["juice", "saft", "appelsinjuice", "æblejuice", "juice og saft", "smoothie", "nektar", "kokosvand", "capri sun", "mogu mogu"]
+refs = ["rynkeby"]
+
+[[concepts]]
+name = "rynkeby"
+aliases = ["rynkeby"]
+
+[[concepts]]
+name = "energidrik"
+aliases = ["energidrik", "energy drink", "energidrikke"]
+
+[[concepts]]
+name = "kaffe"
+aliases = ["kaffe", "kaffekapsler", "kaffepuder", "kaffebønner", "espresso", "latte", "americano", "formalet kaffe", "instant kaffe", "café au lait", "helbønner", "filterkaffe"]
+
+[[concepts]]
+name = "te"
+aliases = ["te", "tebreve", "chai", "urtete", "frugtte", "grøn te", "matcha"]
+
+[[concepts]]
+name = "vin"
+description = "Vin generelt. Bemærk: 'rose' er bevidst ikke alias (ROSE er også et kyllingemærke) - brug 'rosévin'."
+aliases = ["vin", "hvidvin", "rødvin", "rosévin", "rosevin", "mousserende vin", "prosecco", "valpolicella", "chianti", "bag-in-box", "merlot", "grüner veltliner", "rioja", "moscato", "chardonnay", "sauvignon blanc", "cabernet", "shiraz", "malbec", "pinot", "tempranillo", "rosso", "reserva", "cava", "sangria", "portvin", "dessertvin"]
+
+[[concepts]]
+name = "spiritus"
+aliases = ["spiritus", "vodka", "rom", "gin", "whisky", "whiskey", "snaps", "likør", "bitter"]
+
+[[concepts]]
+name = "alkoholfri"
+description = "Alkoholfri drikkevarer. Typisk brugt som udelukkelse: 'øl -alkoholfri'."
+aliases = ["alkoholfri", "alkoholfrit", "alkoholfrie", "uden alkohol", "alcohol free", "nul procent"]
+
+[[concepts]]
+name = "mælk"
+aliases = ["mælk", "minimælk", "letmælk", "sødmælk", "kærnemælk", "drikkeyoghurt", "havredrik", "sojadrik", "plantedrik", "mandeldrik"]
+
+[[concepts]]
+name = "yoghurt"
+aliases = ["yoghurt", "ymer", "tykmælk", "skyr", "yoghurt med frugt", "drikkeyoghurt", "græsk yoghurt", "lassi", "risifrutti"]
+refs = ["cheasy", "actimel"]
+
+[[concepts]]
+name = "cheasy"
+aliases = ["cheasy"]
+
+[[concepts]]
+name = "actimel"
+aliases = ["actimel"]
+
+[[concepts]]
+name = "ost"
+description = "Ost i alle afskygninger. 'grana padano' og 'camembert' er med som ord fra tilbudsaviserne."
+aliases = ["ost", "skiveost", "ostehaps", "pikantost", "flødeost", "smelteost", "revet ost", "skæreost", "cheddar", "mozzarella", "camembert", "brie", "grana padano", "parmesan", "gedeost", "blåskimmelost", "ost i skiver", "ostemad", "roquefort", "gorgonzola", "paneer", "burrata", "halloumi", "feta", "ricotta", "pecorino", "manchego"]
+refs = ["them", "le-rustique", "mon-ami", "president", "grana-padano", "chavroux"]
+
+[[concepts]]
+name = "them"
+aliases = ["them", "them osteri"]
+
+[[concepts]]
+name = "le-rustique"
+aliases = ["le rustique"]
+
+[[concepts]]
+name = "mon-ami"
+aliases = ["mon ami"]
+
+[[concepts]]
+name = "president"
+aliases = ["præsident", "president", "præsident brie"]
+
+[[concepts]]
+name = "grana-padano"
+aliases = ["grana padano", "zanetti"]
+
+[[concepts]]
+name = "chavroux"
+aliases = ["chavroux"]
+
+[[concepts]]
+name = "smør"
+aliases = ["smør", "smørbar", "smørblandet", "kærgården", "margarine"]
+refs = ["kærgården"]
+
+[[concepts]]
+name = "kærgården"
+aliases = ["kærgården"]
+
+[[concepts]]
+name = "fløde"
+aliases = ["fløde", "piskefløde", "madlavningsfløde", "flødekartofler", "cremefine", "creme fraiche", "crème fraiche"]
+
+[[concepts]]
+name = "hytteost"
+aliases = ["hytteost", "cottage cheese"]
+
+[[concepts]]
+name = "æg"
+aliases = ["æg", "skrabeæg", "buræg", "frilandsæg", "dava æg", "hønseæg", "æggehvider"]
+
+[[concepts]]
+name = "kylling"
+aliases = ["kylling", "kyllingefilet", "kyllingebryst", "kyllingebrystfilet", "kyllingeinderfilet", "grillkylling", "hel kylling", "kyllingeoverlår", "kyllingelår", "kyllingekød", "fjerkræ", "krebinetter", "høns", "hønsekød", "kyllingeburger", "kyllingepølse", "kyllingesalat"]
+refs = ["danpo"]
+
+[[concepts]]
+name = "danpo"
+aliases = ["danpo"]
+
+[[concepts]]
+name = "oksekød"
+description = "Oksekød. Hakket oksekød, stege og bøffer."
+aliases = ["oksekød", "okse", "hakket oksekød", "hakket okse", "okseculotte", "oksebov", "tyksteg", "tykstegsbøffer", "entrecote", "entrecoté", "rib eye", "ribeye", "roastbeef", "oksemørbrad", "okseinderlår", "ribeyesteak", "højrebsbøf", "oksekødsfars", "hakkebøf", "oksebøf"]
+
+[[concepts]]
+name = "svinekød"
+aliases = ["svinekød", "gris", "flæsk", "ribbensteg", "hamburgerryg", "mørbrad af gris", "svinemørbrad", "medister", "karbonader", "schnitzel", "skinkeschnitzel", "kotelet", "spare ribs", "svinekam", "grisekød", "grisekæber", "nakkekotelet", "kamkotelet", "stegeflæsk", "frikadeller", "flæskesteg"]
+refs = ["bacon", "tulip"]
+
+[[concepts]]
+name = "bacon"
+aliases = ["bacon", "røget bacon", "bacon i skiver", "bacon cubes", "pancetta"]
+
+[[concepts]]
+name = "tulip"
+aliases = ["tulip"]
+
+[[concepts]]
+name = "lammekød"
+aliases = ["lammekød", "lam", "lammeculotte", "lammesteg", "lammefilet", "lammekølle", "lammeribben"]
+
+[[concepts]]
+name = "kalvekød"
+aliases = ["kalvekød", "kalv", "kalveculotte", "kalvesteg", "kalvefilet", "kalvekotelet"]
+
+[[concepts]]
+name = "and"
+description = "And og berberiand. Bemærk: 'and' er også et engelsk ord - derfor kun danske sammensætninger ud over 'and' selv."
+aliases = ["and", "andebryst", "andebryststeg", "andelår", "andesteg", "berberiand", "berberieand", "berberieandebryst", "berberieandelår", "pekingand", "andemenu", "confiteret and"]
+
+[[concepts]]
+name = "pålæg"
+description = "Pålæg til brød. 'pålæg' er exact: chokopålæg og pålægsmaskine er ikke pålæg."
+aliases = ["pålæg", "pålægsost", "spegepølse", "skinke", "leverpostej", "paté", "charcuteri", "smørrebrød", "salami", "serranoskinke", "prosciutto", "chorizo", "sylte", "kødpålæg", "postej"]
+exact_aliases = ["pålæg"]
+
+[[concepts]]
+name = "laks"
+aliases = ["laks", "laksefilet", "fersk laks", "røget laks", "varmrøget laks", "koldrøget laks", "laksefars", "gravad laks", "laksefileter", "laksestykke"]
+
+[[concepts]]
+name = "fisk"
+aliases = ["fisk", "fiskefilet", "fiskefileter", "rødspætte", "rødspættefilet", "kulmule", "sej", "torsk", "torskefars", "ørred", "røget ørred", "makrel", "sild", "torskerogn", "fiskemarked", "torskefilet", "torskefileter", "sejfilet", "sejfileter", "alaskasej", "fiskepinde", "fiskefars", "fiskefrikadeller", "ørredfilet", "makrelfilet"]
+refs = ["laks", "rejer"]
+
+[[concepts]]
+name = "rejer"
+aliases = ["rejer", "grønlandske rejer", "rejecocktail", "krebsehaler", "vannamei rejer", "kæmpe rejer", "kogte rejer"]
+
+[[concepts]]
+name = "pasta"
+aliases = ["pasta", "spaghetti", "penne", "fusilli", "lasagne", "ravioli", "fettuccine", "tortellini", "nudler", "risnudler", "ægnudler", "makaroni", "tagliatelle", "farfalle", "gnocchi", "instantnudler", "mienudler", "woknudler"]
+
+[[concepts]]
+name = "ris"
+aliases = ["ris", "basmati", "jasminris", "couscous", "risalamande", "grødris", "risotto"]
+
+[[concepts]]
+name = "brød"
+aliases = ["brød", "rugbrød", "franskbrød", "rundstykker", "rundstykke", "boller", "protein boller", "flute", "baguette", "knækbrød", "toastbrød", "burgerboller", "pitabrød", "familierugbrød", "rugboller", "naanbrød", "ciabatta", "focaccia", "simit"]
+refs = ["kohberg", "hatting"]
+
+[[concepts]]
+name = "kohberg"
+aliases = ["kohberg"]
+
+[[concepts]]
+name = "hatting"
+aliases = ["hatting"]
+
+[[concepts]]
+name = "kartofler"
+aliases = ["kartofler", "kartoffel", "babykartofler", "ovn-kartofler", "ovnklare kartofler", "flødekartofler", "kartoffelmos", "pommes frites", "bages kartofler", "kartoffelbåde", "kartoffelsalat", "pommes"]
+
+[[concepts]]
+name = "frugt"
+aliases = ["frugt", "æbler", "æble", "pærer", "pære", "bananer", "banan", "druer", "grønne druer", "appelsiner", "appelsin", "jordbær", "vindruer", "melon", "meloner", "vandmelon", "ananas", "mango", "kiwi", "ferskner", "fersken", "dadler", "dadelkugler", "blåbær", "hindbær", "solbær", "brombær", "kirsebær", "tranebær", "litchi", "granatæble", "kaki", "citron", "citroner", "lime", "rosiner", "svesker", "abrikoser"]
+
+[[concepts]]
+name = "grøntsager"
+description = "Grøntsager. 'bønner' og 'nødder' er exact, så kaffebønner og pebernødder ikke rammer."
+aliases = ["grøntsager", "grønt", "tomater", "cherrytomater", "agurk", "agurker", "peberfrugt", "løg", "forårsløg", "rødløg", "hvidløg", "gulerødder", "spidskål", "hvidkål", "rødkål", "kål", "salat", "hjertesalat", "svampe", "hvide svampe", "champignon", "champignoner", "porre", "porrer", "selleri", "broccoli", "blomkål", "ærter", "sukkerærter", "grønne bønner", "haricots verts", "majs", "grøntsagsblanding", "avocado", "pak choi", "rødbede", "rødbeder", "pastinak", "persillerod", "fennikel", "asparges", "spinat", "rucola", "græskar", "aubergine", "zucchini", "artiskok"]
+exact_aliases = ["bønner"]
+
+[[concepts]]
+name = "snacks"
+description = "Snacks og nødder. 'nødder' er exact, så pebernødder (julesmåkager) ikke rammer."
+aliases = ["snacks", "snack", "chips", "chips og dip", "ostepops", "popcorn", "nødder", "nøddeblanding", "peanuts", "mandler", "snackmandler", "cashewnødder", "jordnødder", "valnødder", "pistacienødder", "pistacie", "hasselnødder", "kastanjer", "spisekastanjer", "pringles", "rejechips", "proteinbar", "proteinbolde"]
+exact_aliases = ["nødder", "snacks", "snack"]
+refs = ["kims"]
+
+[[concepts]]
+name = "kims"
+description = "KiMs snacks. Bemærk: 'kids' er ikke et alias (børnetøj)."
+aliases = ["kims"]
+
+[[concepts]]
+name = "slik"
+aliases = ["slik", "slikpose", "vingummi", "vingummier", "lakrids", "bolcher", "slik og chokolade", "guf", "karameller", "konfekt", "marcipan", "flødeboller", "juleskum", "skumfigurer"]
+refs = ["chokolade", "haribo", "kinder", "ferrero", "toms", "malaco", "carletti", "dumle", "bonbon", "candy-king"]
+
+[[concepts]]
+name = "chokolade"
+aliases = ["chokolade", "chokoladebar", "mælkesnitte", "chokoladeæg", "fyldt chokolade", "kit kat", "toffifee", "yankie bar", "chokopålæg", "overtrækschokolade", "marabou", "milka", "ritter sport", "lindt", "nestlé", "nestle"]
+
+[[concepts]]
+name = "haribo"
+aliases = ["haribo"]
+
+[[concepts]]
+name = "kinder"
+aliases = ["kinder", "kinderæg", "kinder pingui", "kinder snack"]
+
+[[concepts]]
+name = "ferrero"
+aliases = ["ferrero", "ferrero rocher", "ferrero collection"]
+
+[[concepts]]
+name = "toms"
+aliases = ["toms"]
+
+[[concepts]]
+name = "malaco"
+aliases = ["malaco"]
+
+[[concepts]]
+name = "carletti"
+aliases = ["carletti", "p-tærte"]
+
+[[concepts]]
+name = "dumle"
+aliases = ["dumle"]
+
+[[concepts]]
+name = "bonbon"
+aliases = ["bonbon"]
+
+[[concepts]]
+name = "candy-king"
+aliases = ["candy king", "candyking"]
+
+[[concepts]]
+name = "is"
+description = "Is (dessert). Kort ord - matches kun som helt ord, så 'gris' og 'Paris' ikke rammer."
+aliases = ["is", "isbæger", "iskasse", "ispinde", "flødeis", "sorbet", "softice", "isvafler", "isdessert", "ismarked", "islagkage", "gelato", "sundae"]
+refs = ["premier-is", "ben-jerrys", "magnum"]
+
+[[concepts]]
+name = "premier-is"
+description = "Premier Is. Kun den faste form: 'premier' alene kan optræde i andre brands."
+aliases = ["premier is"]
+
+[[concepts]]
+name = "ben-jerrys"
+aliases = ["ben jerrys", "ben and jerry"]
+
+[[concepts]]
+name = "magnum"
+aliases = ["magnum", "cornetto"]
+
+[[concepts]]
+name = "kage"
+aliases = ["kage", "kager", "kagemarked", "kanelsnegle", "tebirkes", "wienerbrød", "croissant", "muffin", "muffins", "cookies", "kiks", "digestive", "dessert", "lagkage", "brownie", "donut", "donuts", "pavlova", "macarons", "cupcake", "romkugler", "drømmekage"]
+
+[[concepts]]
+name = "pizza"
+aliases = ["pizza", "pizzabund", "frossen pizza", "pizza 2-pak"]
+
+[[concepts]]
+name = "suppe"
+aliases = ["suppe", "hønsekødssuppe", "oksekødssuppe", "specialsuppe", "tomatsuppe", "grøntsagssuppe"]
+
+[[concepts]]
+name = "færdigretter"
+aliases = ["færdigret", "færdigretter", "frostret", "frostretter", "nem aftensmad", "nemt til aftensmad", "take away", "to-go", "sliders", "tapasmenu", "gullasch", "gryderet", "wokret"]
+
+[[concepts]]
+name = "frost"
+description = "Frostvarer generelt (føtex har frostkataloger med egne varer)."
+aliases = ["frost", "frostvarer", "dybfrost", "frossen", "frosne"]
+
+[[concepts]]
+name = "økologisk"
+description = "Økologiske varer. Typisk udelukkelse: 'ost -økologisk'."
+aliases = ["økologisk", "økologiske", "øko", "ø-mærket", "organic"]
+
+[[concepts]]
+name = "julekalender"
+description = "Adventskalendere. Typisk udelukkelse: 'slik -julekalender'."
+aliases = ["julekalender", "julekalendere", "julekalenderen", "adventskalender", "chokoladejulekalender"]
+
+[[concepts]]
+name = "julefrokost"
+aliases = ["julefrokost", "julefrokostmenu", "julefrokosten"]
+
+[[concepts]]
+name = "nytår"
+aliases = ["nytår", "nytårsmenu", "nytårs", "nytårsaften"]
+
+[[concepts]]
+name = "dansk"
+description = "Danske varer (dansk kød, frugt osv.)."
+aliases = ["dansk", "danske", "danskproduceret", "fra danmark", "dansk gris", "dansk kylling"]
+
+[[concepts]]
+name = "delikatesse"
+aliases = ["delikatesse", "delikatessen", "delikatessens", "slagter", "slagterafdelingen"]
+
+[[concepts]]
+name = "bager"
+aliases = ["bager", "bagerens", "friskbagt", "friskbagte", "bagerafdelingen", "bageri", "simit", "sesamring"]
+
+[[concepts]]
+name = "tilbudspris"
+description = "Pris-signalord i navne. Nyttig til 'app-pris' udelukkelser."
+aliases = ["app-pris", "app pris", "medlemspris", "mængderabat", "3 for 2"]

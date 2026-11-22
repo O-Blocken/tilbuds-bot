@@ -1,0 +1,36 @@
+# Docker build context exclusions. The image only needs the Go source,
+# the pinned Python environment, and the OCR launcher.
+.env
+.envrc
+.env.bak
+.venv/
+.venv.bak/
+.venv.bak
+data/
+config.toml
+work/
+bin/
+.gocache/
+.gomodcache/
+.git/
+.gitignore
+.dockerignore
+compose.yaml
+__pycache__
+*.py[cod]
+*.exe
+*.test
+coverage.out
+.last_week.json
+last_week.json
+channel_config.json
+# Documentation and CI metadata are not needed inside the image.
+.github/
+docs/
+README.md
+LICENSE
+SECURITY.md
+CONTRIBUTING.md
+NIX.md
+flake.nix
+flake.lock

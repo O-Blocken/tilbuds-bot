@@ -1,0 +1,45 @@
+---
+services:
+  spar-tilbuds-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: spar-tilbuds-bot:latest
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 30s
+    # The image runs as UID 10001. The ./data bind mount must be writable by
+    # that user: sudo chown -R 10001:10001 data
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    # Optional: without .env the bot exits with "missing DISCORD_BOT_TOKEN"
+    # instead of the whole compose file failing to start.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      CONFIG_PATH: /data/config.toml
+      # Cron and notification times are evaluated in this timezone.
+      TZ: ${TZ:-Europe/Copenhagen}
+      HOME: /home/bot
+      PADDLEOCR_PYTHON: /app/.venv/bin/python
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
+    volumes:
+      - ./data:/data
+      - spar-tilbuds-work:/app/work
+      - spar-tilbuds-paddle-cache:/home/bot
+    tmpfs:
+      - /tmp
+
+volumes:
+  spar-tilbuds-work:
+  spar-tilbuds-paddle-cache:
