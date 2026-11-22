@@ -2,7 +2,9 @@
 name = "tjekapi-paddleocr"
 version = "0.1.0"
 description = "uv-managed PaddleOCR runtime for the tjekapi OCR worker"
-requires-python = ">=3.12,<3.13"
+# 3.13 is the newest interpreter paddlepaddle ships wheels for (cp39-cp313), so
+# the range deliberately stops there; raising it breaks `uv sync`.
+requires-python = ">=3.13,<3.14"
 dependencies = [
     "paddleocr[all]==3.7.0",
     "paddlepaddle==3.2.0",

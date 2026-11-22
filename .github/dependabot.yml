@@ -23,6 +23,12 @@ updates:
     directory: "/"
     schedule:
       interval: weekly
+    ignore:
+      # paddlepaddle ships wheels only up to cp313, so a newer Python base image
+      # cannot install the OCR runtime (see pyproject.toml). Drop this once
+      # paddle publishes cp314 wheels.
+      - dependency-name: "python"
+        versions: [">= 3.14"]
 
   - package-ecosystem: uv
     directory: "/"
