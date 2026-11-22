@@ -5,7 +5,7 @@
 # ---------------------------------------------------------------------------
 FROM ghcr.io/astral-sh/uv:0.12.6 AS uv
 
-FROM python:3.12-slim-bookworm AS python-dependencies
+FROM python:3.15-slim-bookworm AS python-dependencies
 
 COPY --from=uv /uv /uvx /usr/local/bin/
 
@@ -41,7 +41,7 @@ RUN CGO_ENABLED=0 GOOS="${TARGETOS:-linux}" GOARCH="${TARGETARCH:-amd64}" \
 # ---------------------------------------------------------------------------
 # Runtime
 # ---------------------------------------------------------------------------
-FROM python:3.12-slim-bookworm AS runtime
+FROM python:3.15-slim-bookworm AS runtime
 
 # Run unprivileged. Named volumes inherit this ownership on first use; a host
 # bind mount at /data must be writable by the same UID (see README).
