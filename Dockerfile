@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------
 # Python: locked PaddleOCR environment (optional OCR enrichment)
 # ---------------------------------------------------------------------------
-FROM ghcr.io/astral-sh/uv:0.12.6 AS uv
+FROM ghcr.io/astral-sh/uv:0.13.9 AS uv
 
 FROM python:3.12-slim-bookworm AS python-dependencies
 
